@@ -31,29 +31,32 @@ def checkout(products):
 
     total_price = 0
     for p in products:
+        p = json.loads(p)
         result = select(c for c in Produto if c.id == p['id'])[:]
         product = result[0]
 
-        if p['quantidade_compra'] > product.quantidade:
+        if p['amount'] > product.quantidade:
             response['status'] = 'failed'
             response['msg'] = 'Compra cancelada! Itens adicionados excedem o estoque'
 
     items = []
     if response['status'] != 'failed':
         for p in products:
+            p = json.loads(p)
+
             result = select(c for c in Produto if c.id == p['id'])[:]
             product = result[0]
 
             items.append(product)
 
-            total_price += product.preco * p['quantidade_compra']
+            total_price += product.preco * p['amount']
 
-            product.quantidade -= p['quantidade_compra']
+            product.quantidade -= p['amount']
 
+        total_price = round(total_price, 2)
         response = {
-            'total_price': total_price,
             'status': 'approved',
-            'client': client
+            'total_price': total_price
         }
 
         sale = Pedido(
