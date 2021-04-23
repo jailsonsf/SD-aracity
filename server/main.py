@@ -1,8 +1,11 @@
 import socket
-import sys
 
 from database.db import *
 from controller import *
+
+with db_session:
+    if Produto.select().first() is None:
+        populate_database()
 
 HOST = ''
 PORT = 5000
@@ -14,27 +17,22 @@ tcp.listen(1)
 while True:
     con, client = tcp.accept()
     print('Conectado com ', con)
+    con.send(all_products().encode())
+    init = con.recv(1024)
 
+    products = []
     while True:
         msg = con.recv(1024)
         if not msg:
             break
-        print(client, msg.decode())
 
-    print('Finalisando conexão com ', client)
-    con.close()
+        if msg.decode() == 'f':
+            con.send(checkout(products).encode())
+            break
+
+        products.append(msg.decode())
+
     break
 
-with db_session:
-    if Produto.select().first() is None:
-        populate_database()
-
-
-# input lista de compras
-# data = json.load(open('server/data.json'))['lista_compras']
-
-# products = []
-# for p in data:
-#     products.append(p)
-
-# checkout(products)
+print('Finalisando conexão com ', client)
+con.close()
