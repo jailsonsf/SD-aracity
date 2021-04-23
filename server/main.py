@@ -1,4 +1,5 @@
 import socket
+import sys
 
 from database.db import *
 from controller import *
@@ -20,8 +21,9 @@ while True:
             break
         print(client, msg.decode())
 
-    print('Finalisando conexão')
+    print('Finalisando conexão com ', client)
     con.close()
+    break
 
 with db_session:
     if Produto.select().first() is None:
