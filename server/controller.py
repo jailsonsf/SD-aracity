@@ -23,7 +23,7 @@ def all_products():
 
 
 @db_session
-def checkout(products, client):
+def checkout(products):
     response = {
         'status': '',
         'total_price': 0

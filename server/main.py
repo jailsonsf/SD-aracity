@@ -13,4 +13,4 @@ products = []
 for p in data:
     products.append(p)
 
-checkout(products, 'Jailson')
+checkout(products)
