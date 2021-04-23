@@ -38,10 +38,13 @@ def checkout(products, client):
             response['status'] = 'failed'
             response['msg'] = 'Compra cancelada! Itens adicionados excedem o estoque'
 
+    items = []
     if response['status'] != 'failed':
         for p in products:
             result = select(c for c in Produto if c.id == p['id'])[:]
             product = result[0]
+
+            items.append(product)
 
             total_price += product.preco * p['quantidade_compra']
 
@@ -55,7 +58,11 @@ def checkout(products, client):
 
         sale = Pedido(
             status=response['status'],
-            total_price=response['total_price'], client=response['client'])
+            total_price=response['total_price'],
+            items=items
+        )
+
+    commit()
 
     response = json.dumps(response)
 

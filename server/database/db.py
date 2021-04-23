@@ -8,13 +8,15 @@ class Produto(db.Entity):
     preco = Required(float)
     quantidade = Required(int)
     prazo_entrega = Required(str)
+    pedidos = Set('Pedido')
 
 
 class Pedido(db.Entity):
     id = PrimaryKey(int, auto=True)
     status = Required(str)
     total_price = Required(float)
-    client = Required(str)
+    items = Set(Produto)
+
 
 # sql_debug(True)
 
