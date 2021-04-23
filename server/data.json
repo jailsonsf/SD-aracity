@@ -1,0 +1,19 @@
+{
+    "lista_compras": [
+        {
+            "id": 2,
+            "nome": "Tubos",
+            "quantidade_compra": 5
+        },
+        {
+            "id": 7,
+            "nome": "Pregos",
+            "quantidade_compra": 10
+        },
+        {
+            "id": 9,
+            "nome": "Martelo",
+            "quantidade_compra": 2
+        }
+    ]
+}
