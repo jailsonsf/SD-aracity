@@ -37,7 +37,7 @@ em um novo terminal execute:
 python3 client/main.py
 ```
 
-2. No terminal onde o client está sendo executado, basta adicionar o input dois números:
+2. No terminal onde o client está sendo executado, basta adicionar o input com dois números:
 
 ```bash
 7 12
